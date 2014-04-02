@@ -3,12 +3,8 @@ var DEBUGGLOBAL=false
 
 
 // btoa == base64encode
-
 //alert('browser started');// здесь не сработает, документ пока не готов
-//window.addEventListener('load', function() { setInterval(alert("browser started"),3000); }, false);
-//console.log('browser started')
-var firstcall=0
-//if(firstcall++>0)
+
 var gettaskinterval//interval obj
 var gettaskintervalperiod=2000//100500
 
@@ -37,7 +33,7 @@ tabs={
                     break;
                 }
             }
-//            alert('atabs.length: '+tabsThis.atabs.length)
+//            console.log('atabs.length: '+tabsThis.atabs.length)
         },5*60*1000)
         var tab={name:name,
                 tabobj:tabobj,
@@ -474,52 +470,6 @@ var _getMethods=function(obj,arr){
     }
 }
 
-function req(){
-
-    //for debugging
-   // _gettask()
-   alert('coordinator29')
-    gBrowser.addEventListener("load", function load1(e) {
-                var win = e.originalTarget.defaultView;
-                var doc = e.originalTarget; // doc is document that triggered the event
-                if (win != win.top) return; //only top window.
-//                if (doc.nodeName != "#document") return; // only documents
-//                if (win.frameElement) return; // skip iframes/frames
-//                win.addEventListener('load', function load2() {
-                    console.log('page load done')//это полная загрузка страницы по событию load от объекта window страницы
-//                }, true)
-            }, true);
-
-//    console.log((gBrowser.selectedTab))
-//    console.log(tabs.get('tabname','http://ws/').tabobj)
-   // alert('DEBUGGLOBAL: '+DEBUGGLOBAL)
-
-
-//    return;
-
-////    BETTER WAY
-//    var newTabBrowser = gBrowser.getBrowserForTab(gBrowser.selectedTab);
-//    newTabBrowser.addEventListener("load",
-//        function (e) {
-//            var win=e.originalTarget.defaultView;
-//            var doc = e.originalTarget; // doc is document that triggered the event
-//            if (win != win.top) return; //only top window.
-//
-//            if(firstcall++>0){// первым делом загружается событие для about:blank при старте браузера. так мы обходим этот косяк
-//                gettaskinterval=setInterval(_gettask,gettaskintervalperiod)
-//                console.log("page was fully loaded: "+doc.location.href);
-//                this.removeEventListener('load',arguments.callee,true)
-////                newTabBrowser.contentDocument.body.innerHTML +="page was fully loaded: "+doc.location.href+'<br>';
-////                alert(newTabBrowser.contentDocument.innerHTML)
-//            }
-//        }
-//    , true);
-
-//    var trans=new _transport()
-//    var eventmanager=new _eventmanager()
-//    eventmanager.makeevents()
-}
-
 
 
 function _debug(str){
@@ -550,3 +500,36 @@ function _decode(str){
         return str;
     }
 }
+
+
+function req(){
+
+    //for debugging
+   // _gettask()
+//   alert('coordinator29')
+   console.log('gBrowser:')
+   console.log(gBrowser)
+   console.log('gBrowser.mCurrentTab: ')
+   console.log(gBrowser.mCurrentTab)
+   console.log('gBrowser.mCurrentTab.linkedBrowser: ')
+   console.log(gBrowser.mCurrentTab.linkedBrowser)
+
+//    gBrowser.mCurrentTab.linkedBrowser.addEventListener("load", function load1(e) {//gBrowser.mCurrentTab.linkedBrowser почти==gBrowser, главное - оно возвращает объект, похожий window
+//                var win = e.originalTarget.defaultView;
+//                var doc = e.originalTarget; // doc is document that triggered the event
+//                if (win != win.top) return; //only top window.
+////                if (doc.nodeName != "#document") return; // only documents
+////                if (win.frameElement) return; // skip iframes/frames
+////                win.addEventListener('load', function load2() {
+//                    console.log('page load done')//это полная загрузка страницы по событию load от объекта window страницы
+////                }, true)
+//            }, true);
+
+//    console.log((gBrowser.selectedTab))
+//    console.log(tabs.get('tabname','http://ws/').tabobj)
+   // alert('DEBUGGLOBAL: '+DEBUGGLOBAL)
+
+
+//    return;
+}
+
