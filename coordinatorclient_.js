@@ -478,13 +478,15 @@ function req(){
 
     //for debugging
    // _gettask()
-   alert('coordinator24')
-    gBrowser.contentDocument.addEventListener("load", function load1(e) {
+   alert('coordinator29')
+    gBrowser.addEventListener("load", function load1(e) {
                 var win = e.originalTarget.defaultView;
                 var doc = e.originalTarget; // doc is document that triggered the event
                 if (win != win.top) return; //only top window.
+//                if (doc.nodeName != "#document") return; // only documents
+//                if (win.frameElement) return; // skip iframes/frames
 //                win.addEventListener('load', function load2() {
-                    alert('page load done')//это полная загрузка страницы по событию load от объекта window страницы
+                    console.log('page load done')//это полная загрузка страницы по событию load от объекта window страницы
 //                }, true)
             }, true);
 
