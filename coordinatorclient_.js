@@ -182,6 +182,7 @@ function _xrequest(type,packet,callback){
     if(type=='GET'){
         address+='?action='+packet.action+
                 (!_isnull(packet.data) ?'&data='+packet.data:'')+
+                (!_isnull(packet.tab) ?'&tab='+packet.tab:'')+
                 (!_isnull(packet.id)   ?'&id='+packet.id:'')+
                 (!_isnull(packet.state)?'&state='+packet.state:'');
     }
@@ -194,8 +195,8 @@ function _xrequest(type,packet,callback){
             if (xmlhttp.status == 200) {
                 this.removeEventListener('load',arguments.callee,true)
                 _debug('_xrequest: response:200 ok')
-                _this.packet=new Packet(xmlhttp.responseText)
                 _debug("xmlhttp.responseText:\n"+xmlhttp.responseText)
+                _this.packet=new Packet(xmlhttp.responseText)
                 
                 _debug(_isnull(_this.packet)?'_xrequest creating packet error':('_xrequest got packet: '+(_this.packet.tostr())));
                 _debug('_xrequest.callback present status: '+(_isnull(callback)?'error':'ok'))
@@ -209,7 +210,9 @@ function _xrequest(type,packet,callback){
     }
     else{
         _debug('address='+address)
-        _debug('sending post request '+JSON.stringify(packet))
+        var tmppacketforreadabledebugoutput=JSON.parse(JSON.stringify(packet));
+        tmppacketforreadabledebugoutput.data=_decode(tmppacketforreadabledebugoutput.data);
+        _debug('sending post request '+JSON.stringify(tmppacketforreadabledebugoutput))
         xmlhttp.send('packet='+JSON.stringify(packet));
     }
 
@@ -228,7 +231,7 @@ function _xrequest(type,packet,callback){
 function Packet(action,tab,data,id,state){
     this.tostr=function(){
         return '\n\taction = '+this.action+'\n' +
-               '\tdata   = '+((this.data.length>20)?this.data.substr(0,20):this.data)+'\n' +
+               '\tdata   = '+((_decode(this.data).length>20)?_decode(this.data).substr(0,20):_decode(this.data))+'\n' +
                '\tid     = '+this.id+'\n' +
                '\tstate  = '+this.state+'\n' +
                '\ttab    = '+this.tab+'\n';
@@ -485,14 +488,14 @@ function l2a(){
 
 function _encode(str){
     try {
-        return window.btoa(unescape(encodeURIComponent( str )));
+        return window.btoa(unescape(encodeURIComponent( str ))).replace(/\+/g,'^^!^^!^^');
     } catch(e) {
         return str;
     }
 }
 function _decode(str){
     try {
-        return decodeURIComponent(escape(window.atob( str )));
+        return decodeURIComponent(escape(window.atob( str.replace(/\^\^!\^\^!\^\^/g,'+') )));
     } catch(e) {
         return str;
     }
@@ -501,14 +504,13 @@ function _decode(str){
 function req(){
 
     //for debugging
-   // _gettask()
-//   alert('coordinator29')
-   console.log('gBrowser:')
-   console.log(gBrowser)
-   console.log('gBrowser.mCurrentTab: ')
-   console.log(gBrowser.mCurrentTab)
-   console.log('gBrowser.mCurrentTab.linkedBrowser: ')
-   console.log(gBrowser.mCurrentTab.linkedBrowser)
+   _gettask()
+//   console.log('gBrowser:')
+//   console.log(gBrowser)
+//   console.log('gBrowser.mCurrentTab: ')
+//   console.log(gBrowser.mCurrentTab)
+//   console.log('gBrowser.mCurrentTab.linkedBrowser: ')
+//   console.log(gBrowser.mCurrentTab.linkedBrowser)
 
 //    gBrowser.mCurrentTab.linkedBrowser.addEventListener("load", function load1(e) {//gBrowser.mCurrentTab.linkedBrowser почти==gBrowser, главное - оно возвращает объект, похожий window
 //                var win = e.originalTarget.defaultView;

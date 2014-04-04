@@ -252,6 +252,7 @@ class coordinator{
         }
         else if($_SERVER["REQUEST_METHOD"]=="POST"){
             _debug('parsing POST');//для получения постзапросов нужно обращаться не к папке, а к php файлу напрямую!!!!
+//            file_put_contents(dirname(__FILE__).'/debug.html',print_r($_POST,true),FILE_APPEND);
             _debug($_POST);
             $json='';
             if(array_key_exists('packet',$_REQUEST))$json=json_decode($_REQUEST['packet']);
@@ -419,11 +420,11 @@ function _str2Hex($string){
     return $hex;
 }
 
-function _encode($s){
-    return base64_encode($s);
+function _encode($s){// да, здесь все равно проблема с пробелами, только в данном случае при передаче страницы символы + автоматически преобразовывались в них
+    return str_replace('+','^^!^^!^^',base64_encode($s));// так что лечим опять заменами
 }
 function _decode($s){
-    return base64_decode($s);
+    return base64_decode(str_replace('^^!^^!^^','+',$s));
 }
 
 new coordinator();
