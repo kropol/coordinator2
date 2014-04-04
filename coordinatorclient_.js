@@ -197,7 +197,7 @@ function _xrequest(type,packet,callback){
                 _debug('_xrequest: response:200 ok')
                 _debug("xmlhttp.responseText:\n"+xmlhttp.responseText)
                 _this.packet=new Packet(xmlhttp.responseText)
-                
+
                 _debug(_isnull(_this.packet)?'_xrequest creating packet error':('_xrequest got packet: '+(_this.packet.tostr())));
                 _debug('_xrequest.callback present status: '+(_isnull(callback)?'error':'ok'))
                 if(!_isnull(callback))callback(_this);
@@ -299,7 +299,7 @@ function Packet(action,tab,data,id,state){
         _debug('changedataandstate finished')
     }
 
-    
+
     if(action.length>20){
         this.parsepage(action)
     }else{
@@ -449,7 +449,7 @@ var _getAllKeys = function(obj,arr){
         }
         return keys;
     }
-    
+
 
 }
 
@@ -504,13 +504,13 @@ function _decode(str){
 function req(){
 
     //for debugging
-   _gettask()
-//   console.log('gBrowser:')
-//   console.log(gBrowser)
-//   console.log('gBrowser.mCurrentTab: ')
-//   console.log(gBrowser.mCurrentTab)
-//   console.log('gBrowser.mCurrentTab.linkedBrowser: ')
-//   console.log(gBrowser.mCurrentTab.linkedBrowser)
+//   _gettask()
+   console.log('gBrowser:')
+   console.log(gBrowser)
+   console.log('gBrowser.mCurrentTab: ')
+   console.log(gBrowser.mCurrentTab)
+   console.log('gBrowser.mCurrentTab.linkedBrowser: ')
+   console.log(gBrowser.mCurrentTab.linkedBrowser)
 
 //    gBrowser.mCurrentTab.linkedBrowser.addEventListener("load", function load1(e) {//gBrowser.mCurrentTab.linkedBrowser почти==gBrowser, главное - оно возвращает объект, похожий window
 //                var win = e.originalTarget.defaultView;
