@@ -42,7 +42,7 @@ class packet{
         $this->action = 'error';
     }
     public function setstate($newstate){
-        $states = get_class_vars(states);
+        $states = get_class_vars('states');
         foreach ($states as $name => $value) {
             if ($name == $newstate) {
                 $this->state = $newstate;
@@ -284,7 +284,7 @@ class coordinator{
         _debug($this->packet);
     }
     private function createactionslist(){
-        $meths=get_class_methods(coordinator);
+        $meths=get_class_methods('coordinator');
 //        _debug($meths);
         $meths=array_filter($meths,function($i){return strstr($i,'__construct')||strstr($i,'createinputpacket')||strstr($i,'createactionslist')?false:true;});
 //        _debug($meths);
@@ -420,10 +420,10 @@ function _str2Hex($string){
 }
 
 function _encode($s){
-    return base64_encode( urlencode(str_replace(' ','^^!^^!^^',($s))));
+    return base64_encode($s);
 }
 function _decode($s){
-    return str_replace('^^!^^!^^',' ',urldecode(base64_decode($s)));
+    return base64_decode($s);
 }
 
 new coordinator();

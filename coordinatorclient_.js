@@ -485,22 +485,18 @@ function l2a(){
 
 function _encode(str){
     try {
-        while (str.indexOf(' ') != -1)str = str.replace(' ', '^^!^^!^^')
-        return btoa(encodeURIComponent(str))
+        return window.btoa(unescape(encodeURIComponent( str )));
     } catch(e) {
         return str;
     }
 }
 function _decode(str){
     try {
-        str = decodeURIComponent(atob(str))
-        while (str.indexOf('^^!^^!^^') != -1)str = str.replace('^^!^^!^^', ' ')
-        return str
+        return decodeURIComponent(escape(window.atob( str )));
     } catch(e) {
         return str;
     }
 }
-
 
 function req(){
 
